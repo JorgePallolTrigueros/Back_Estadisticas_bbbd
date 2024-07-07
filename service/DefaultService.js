@@ -328,6 +328,39 @@ exports.nbGenerosAnime = function() {
   });
 }
 
+exports.nbDescripcionesLibro = function() {
+  return new Promise(function(resolve, reject) {
+    var examples = {};
+    // NOTA: Hacemos la query a la columna de autor porque hay una confusion en el webscrapping
+    db("SELECT autor FROM libro", (results) => {
+      examples['application/json'] = {
+        "sinopsis" : results,
+      };
+          if (Object.keys(examples).length > 0) {
+            resolve(examples[Object.keys(examples)[0]]);
+          } else {
+            resolve();
+          }
+    });
+  });
+}
+
+exports.puntosTotalesPorAutorManga = function() {
+  return new Promise(function(resolve, reject) {
+    var examples = {};
+    db("SELECT autor, SUM(puntos) as value FROM manga WHERE autor IS NOT NULL AND autor <> '' GROUP BY autor ORDER BY value DESC LIMIT 10", (results) => {
+      examples['application/json'] = {
+        "autoresManga" : results,
+      };
+          if (Object.keys(examples).length > 0) {
+            resolve(examples[Object.keys(examples)[0]]);
+          } else {
+            resolve();
+          }
+    });
+  });
+}
+
 
 exports.nbDescripcionesComic = function() {
   return new Promise(function(resolve, reject) {

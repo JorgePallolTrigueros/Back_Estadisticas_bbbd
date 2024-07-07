@@ -773,6 +773,18 @@ paths:
         "404":
           description: Emulador no encontrado
       x-swagger-router-controller: Default
+  /puntosTotalesPorAutorManga:
+    get:
+      summary: Obtener los pu ntos totales por autor de los Mangas
+      operationId: puntosTotalesPorAutorManga
+      responses:
+        "200":
+          description: Obtener los pu ntos totales por autor de los Mangas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnimesPorAnio'
+      x-swagger-router-controller: Default
   /nbPelisPorPaises:
     get:
       summary: Obtener el numero de peliculas por paises
@@ -855,7 +867,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PelisPorPaises'
+                $ref: '#/components/schemas/PelisDescripcion'
       x-swagger-router-controller: Default
   /nbDescripcionesLibro:
     get:
@@ -867,7 +879,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LibrpsPorPaises'
+                $ref: '#/components/schemas/Librodescripcion'
       x-swagger-router-controller: Default
   /nbDescripcionesSerie:
     get:
@@ -879,7 +891,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SeriesPorPaises'
+                $ref: '#/components/schemas/SeriesDescripcion'
       x-swagger-router-controller: Default
   /nbDescripcionesManga:
     get:
@@ -891,7 +903,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MangaPorPaises'
+                $ref: '#/components/schemas/MangaDescripcion'
       x-swagger-router-controller: Default
   /nbDescripcionesEmulador:
     get:
@@ -903,7 +915,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EmuladorPorPaises'
+                $ref: '#/components/schemas/EmuladorDescripcion'
       x-swagger-router-controller: Default
   /nbDescripcionesJuego:
     get:
@@ -915,13 +927,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/JuegoPorPaises'
+                $ref: '#/components/schemas/JuegoDescripcion'
       x-swagger-router-controller: Default
-
-
-
-
-
   /nbDuracionAnioAnime:
     get:
       summary: Obtener la duracion y el anio de cada anime
@@ -1111,6 +1118,76 @@ components:
         pais:
         - Estados Unidos: 22
     AnimesPorAnio:
+      type: object
+      properties:
+        pais:
+          type: string
+          items:
+            $ref: '#/components/schemas/Peli'
+      example:
+        pais:
+        - Estados Unidos: 22
+    LibrpsPorPaises:
+      type: object
+      properties:
+        pais:
+          type: string
+          items:
+            $ref: '#/components/schemas/Peli'
+      example:
+        pais:
+        - Estados Unidos: 22
+    PelisDescripcion:
+      type: object
+      properties:
+        pais:
+          type: string
+          items:
+            $ref: '#/components/schemas/Peli'
+      example:
+        pais:
+        - Estados Unidos: 22
+    Librodescripcion:
+      type: object
+      properties:
+        pais:
+          type: string
+          items:
+            $ref: '#/components/schemas/Peli'
+      example:
+        pais:
+        - Estados Unidos: 22
+    SeriesDescripcion:
+      type: object
+      properties:
+        pais:
+          type: string
+          items:
+            $ref: '#/components/schemas/Peli'
+      example:
+        pais:
+        - Estados Unidos: 22
+    MangaDescripcion:
+      type: object
+      properties:
+        pais:
+          type: string
+          items:
+            $ref: '#/components/schemas/Peli'
+      example:
+        pais:
+        - Estados Unidos: 22
+    JuegoDescripcion:
+      type: object
+      properties:
+        pais:
+          type: string
+          items:
+            $ref: '#/components/schemas/Peli'
+      example:
+        pais:
+        - Estados Unidos: 22
+    EmuladorDescripcion:
       type: object
       properties:
         pais:

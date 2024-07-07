@@ -364,8 +364,75 @@ module.exports.nbGenerosAnime = function nbGenerosAnime (req, res, next) {
     });
 };
 
+// Este mapa de palabras ya está funcionando
+module.exports.nbDescripcionesLibro = function nbDescripcionesLibro (req, res, next) {
+
+  function separateWordsAndCounts(words) {
+      const wordCount = {};
+      const uniqueWords = [];
+      const repeatedWordsCount = [];
+
+      // Contar la frecuencia de cada palabra
+      words.forEach(word => {
+          wordCount[word] = (wordCount[word] || 0) + 1;
+      });
+
+      // Separar en palabras únicas y frecuencias de palabras repetidas
+      for (const [word, count] of Object.entries(wordCount)) {
+          if (count === 1) {
+              uniqueWords.push(word);
+          } else {
+              repeatedWordsCount.push({ word, count });
+          }
+      }
+
+      return { uniqueWords, repeatedWordsCount };
+  }
+
+  Default.nbDescripcionesLibro()
+    .then(function (response) {
+      const gens = response.sinopsis;
+      let words = [];
+      for (let gen of gens) {
+        let r = gen.autor;
+        if (!r) continue;
+        r = r.replace('/<br>/g', '');
+        r = r.replace('/<b>/g', '');
+        r = r.replace('/</b>/g', '');
+        r = r.replace('/<i>/g', '');
+        r = r.replace('/</i>/g', '');
+        r = r.replace('/<p>/g', '');
+        r = r.replace('/</p>/g', '');
+        r = r.replace('/<div>/g', '');
+        r = r.replace('/</div>/g', '');
+        r = r.replace('/|/g', '.');
+        const rParts = r.split(' ');
+        for (let part of rParts) {
+          const partTrimmed = part.trim();
+          words.push(partTrimmed);
+          
+        }
+      }
+      const result = separateWordsAndCounts(words);
+      utils.writeJson(res, result);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
 module.exports.nbPelisPorPaises = function nbPelisPorPaises (req, res, next) {
   Default.nbPelisPorPaises()
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
+module.exports.puntosTotalesPorAutorManga = function puntosTotalesPorAutorManga (req, res, next) {
+  Default.puntosTotalesPorAutorManga()
     .then(function (response) {
       utils.writeJson(res, response);
     })
