@@ -1,0 +1,1214 @@
+openapi: 3.0.0
+info:
+  title: Entretenimiento API
+  description: "API para manejar Comics, Mangas, Series y Películas."
+  version: 1.0.0
+servers:
+- url: http://localhost:8080/v1
+paths:
+  /comics:
+    get:
+      summary: Obtener una lista de Comics
+      operationId: comicsGET
+      parameters:
+      - name: page
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          default: 1
+      - name: limit
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          default: 10
+      - name: id
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Lista de Comics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListaComics'
+      x-swagger-router-controller: Default
+    delete:
+      summary: Borrar Comics por ID(s)
+      operationId: comicsDELETE
+      parameters:
+      - name: ids
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        "204":
+          description: Comics borrados con éxito
+      x-swagger-router-controller: Default
+  /comics/{id}:
+    put:
+      summary: Actualizar un Cómic
+      operationId: updateComic
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: El ID del cómic a actualizar
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                autor:
+                  type: string
+                descripcion:
+                  type: string
+                imagen:
+                  type: string
+              required:
+                - nombre
+                - autor
+                - descripcion
+                - imagen
+      responses:
+        "200":
+          description: Cómic actualizado con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comic'
+        "404":
+          description: Cómic no encontrado
+      x-swagger-router-controller: Default
+  /mangas:
+    get:
+      summary: Obtener una lista de Mangas
+      operationId: mangasGET
+      parameters:
+      - name: page
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          default: 1
+      - name: limit
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          default: 10
+      - name: id
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Lista de Mangas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListaMangas'
+      x-swagger-router-controller: Default
+    delete:
+      summary: Borrar Mangas por ID(s)
+      operationId: mangasDELETE
+      parameters:
+      - name: ids
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        "204":
+          description: Mangas borrados con éxito
+      x-swagger-router-controller: Default
+  /mangas/{id}:
+    put:
+      summary: Actualizar un Manga
+      operationId: updateManga
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: El ID del manga a actualizar
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                autor:
+                  type: string
+                descripcion:
+                  type: string
+                imagen:
+                  type: string
+              required:
+                - nombre
+                - autor
+                - descripcion
+                - imagen
+      responses:
+        "200":
+          description: Manga actualizado con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Manga'
+        "404":
+          description: Manga no encontrado
+      x-swagger-router-controller: Default
+  /series:
+    get:
+      summary: Obtener una lista de Series
+      operationId: seriesGET
+      parameters:
+      - name: page
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          default: 1
+      - name: limit
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          default: 10
+      - name: id
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Lista de Series
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListaSeries'
+      x-swagger-router-controller: Default
+    delete:
+      summary: Borrar Series por ID(s)
+      operationId: seriesDELETE
+      parameters:
+      - name: ids
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        "204":
+          description: Series borradas con éxito
+      x-swagger-router-controller: Default
+  /series/{id}:
+    put:
+      summary: Actualizar la series
+      operationId: updateSerie
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: El ID del serie a actualizar
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                origen:
+                  type: string
+                descripcion:
+                  type: string
+                anio:
+                  type: integer
+                imagen:
+                  type: string
+              required:
+                - nombre
+                - origen
+                - descripcion
+                - imagen
+                - anio
+      responses:
+        "200":
+          description: Serie actualizado con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Serie'
+        "404":
+          description: Serie no encontrado
+      x-swagger-router-controller: Default
+  /pelis:
+    get:
+      summary: Obtener una lista de Películas
+      operationId: pelisGET
+      parameters:
+      - name: page
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          default: 1
+      - name: limit
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          default: 10
+      - name: id
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Lista de Películas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListaPelis'
+      x-swagger-router-controller: Default
+    delete:
+      summary: Borrar Películas por ID(s)
+      operationId: pelisDELETE
+      parameters:
+      - name: ids
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        "204":
+          description: Películas borradas con éxito
+      x-swagger-router-controller: Default
+  /pelis/{id}:
+    put:
+      summary: Actualizar una peli
+      operationId: updatePeli
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: El ID de la peli a actualizar
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                autor:
+                  type: string
+                descripcion:
+                  type: string
+                imagen:
+                  type: string
+              required:
+                - nombre
+                - autor
+                - descripcion
+                - imagen
+      responses:
+        "200":
+          description: Peli  actualizada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Peli'
+        "404":
+          description: Peli no encontrado
+      x-swagger-router-controller: Default
+  /pelis2:
+    get:
+      summary: Obtener una lista de Películas
+      operationId: pelisGET
+      parameters:
+      - name: page
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          default: 1
+      - name: limit
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          default: 10
+      - name: id
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Lista de Películas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListaPelis2'
+      x-swagger-router-controller: Default
+    delete:
+      summary: Borrar Películas por ID(s)
+      operationId: pelisDELETE
+      parameters:
+      - name: ids
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        "204":
+          description: Películas borradas con éxito
+      x-swagger-router-controller: Default
+  /pelis2/{id}:
+    put:
+      summary: Actualizar una peli2
+      operationId: updatePeli2
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: El ID de la peli2 a actualizar
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                autor:
+                  type: string
+                descripcion:
+                  type: string
+                imagen:
+                  type: string
+              required:
+                - nombre
+                - autor
+                - descripcion
+                - imagen
+      responses:
+        "200":
+          description: Peli2  actualizada con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Peli'
+        "404":
+          description: Peli2 no encontrado
+      x-swagger-router-controller: Default
+  /libros/{id}:
+    put:
+      summary: Actualizar un Libro
+      operationId: updateLibro
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: El ID del libro a actualizar
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                autor:
+                  type: string
+                sinopsis:
+                  type: string
+                imagen:
+                  type: string
+              required:
+                - nombre
+                - autor
+                - sinopsis
+                - imagen
+      responses:
+        "200":
+          description: Libro actualizado con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Libro'
+        "404":
+          description: Libro no encontrado
+      x-swagger-router-controller: Default
+  /libros:
+    get:
+      summary: Obtener una lista de Libros
+      operationId: librosGET
+      parameters:
+      - name: page
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          default: 1
+      - name: limit
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          default: 10
+      - name: id
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Lista de Libros 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListaLibros'
+      x-swagger-router-controller: Default
+    delete:
+      summary: Borrar Libros por ID(s)
+      operationId: librosDELETE
+      parameters:
+      - name: ids
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        "204":
+          description: Libros borrados con éxito
+      x-swagger-router-controller: Default
+  /juegos:
+    get:
+      summary: Obtener una lista de Juegos
+      operationId: juegosGET
+      parameters:
+      - name: page
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          default: 1
+      - name: limit
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          default: 10
+      - name: id
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Lista de Juegos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListaJuegos'
+      x-swagger-router-controller: Default
+    delete:
+      summary: Borrar Juegos por ID(s)
+      operationId: juegosDELETE
+      parameters:
+      - name: ids
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        "204":
+          description: Juegos borrados con éxito
+      x-swagger-router-controller: Default
+  /juegos/{id}:
+    put:
+      summary: Actualizar un Juego
+      operationId: updateJuego
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: El ID del juego a actualizar
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                titulo:
+                  type: string
+                plataformas:
+                  type: string
+                generos:
+                  type: string
+                descripcion:
+                  type: string
+                imagen:
+                  type: string
+                Lo_tengo:
+                  type: string
+              required:
+                - titulo
+                - plataformas
+                - generos
+                - descripcion
+                - imagen
+                - Lo_tengo
+      responses:
+        "200":
+          description: Juego actualizado con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Juego'
+        "404":
+          description: Juego no encontrado
+      x-swagger-router-controller: Default
+  /emuladores:
+    get:
+      summary: Obtener una lista de Emuladores
+      operationId: emuladorsGET
+      parameters:
+      - name: page
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          default: 1
+      - name: limit
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          default: 10
+      - name: id
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Lista de Emuladores
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListaEmulador'
+      x-swagger-router-controller: Default
+    delete:
+      summary: Borrar Emulador por ID(s)
+      operationId: EmuladorsDELETE
+      parameters:
+      - name: ids
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        "204":
+          description: Emulador borrados con éxito
+      x-swagger-router-controller: Default
+  /emuladores/{id}:
+    put:
+      summary: Actualizar un Emulador
+      operationId: updateEmulador
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: El ID del emulador a actualizar
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                titulo:
+                  type: string
+                plataformas:
+                  type: string
+                generos:
+                  type: string
+                descripcion:
+                  type: string
+                imagen:
+                  type: string
+                Lo_tengo:
+                  type: string
+              required:
+                - titulo
+                - plataformas
+                - generos
+                - descripcion
+                - imagen
+                - Lo_tengo
+      responses:
+        "200":
+          description: Emulador actualizado con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Emulador'
+        "404":
+          description: Emulador no encontrado
+      x-swagger-router-controller: Default
+  /nbPelisPorPaises:
+    get:
+      summary: Obtener el numero de peliculas por paises
+      operationId: nbPelisPorPaises
+      responses:
+        "200":
+          description: Lista de paises con el numero de pelis de cada uno
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnimesPorAnio'
+      x-swagger-router-controller: Default
+  /nbPelisPorPaisesPorAnio:
+    get:
+      summary: Obtener el numero de peliculas por paises y por Anio
+      operationId: nbPelisPorPaisesPorAnio
+      responses:
+        "200":
+          description: Lista de paises con el numero de pelis de cada uno por año
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnimesPorAnio'
+      x-swagger-router-controller: Default
+  /nbComicsPorAutor:
+    get:
+      summary: Obtener el numero de comics por autor
+      operationId: nbComicsPorAutor
+      responses:
+        "200":
+          description: Lista de autores con el numero de comics de cada uno
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComicsPorAutor'
+      x-swagger-router-controller: Default
+  /nbAnimesPorPaises:
+    get:
+      summary: Obtener el numero de animes por paises
+      operationId: nbAnimesPorPaises
+      responses:
+        "200":
+          description: Lista de paises con el numero de Animes de cada uno
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PelisPorPaises'
+      x-swagger-router-controller: Default
+  /nbAnimesPorAnio:
+    get:
+      summary: Obtener el numero de animes por anio
+      operationId: nbAnimesPorAnio
+      responses:
+        "200":
+          description: Devuelve el numero de animes por anio
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PelisPorPaises'
+      x-swagger-router-controller: Default
+  /nbGenerosAnime:
+    get:
+      summary: Obtener los generos de anime
+      operationId: nbGenerosAnime
+      responses:
+        "200":
+          description: Devuelve los generos de anime para pintar en el mapa de palabras
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PelisPorPaises'
+      x-swagger-router-controller: Default
+  /nbDescripcionesComic:
+    get:
+      summary: Obtener las descripciones de los comics
+      operationId: nbDescripcionesComic
+      responses:
+        "200":
+          description: Devuelve las descripciones de los comics para pintar en el mapa de palabras
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PelisPorPaises'
+      x-swagger-router-controller: Default
+  /nbDescripcionesLibro:
+    get:
+      summary: Obtener las descripciones de los libros
+      operationId: nbDescripcionesLibro
+      responses:
+        "200":
+          description: Devuelve las descripciones de los libros para pintar en el mapa de palabras
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LibrpsPorPaises'
+      x-swagger-router-controller: Default
+  /nbDescripcionesSerie:
+    get:
+      summary: Obtener las descripciones de los serie.
+      operationId: nbDescripcionesSerie
+      responses:
+        "200":
+          description: Devuelve las descripciones de las Series para pintar en el mapa de palabras
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SeriesPorPaises'
+      x-swagger-router-controller: Default
+  /nbDescripcionesManga:
+    get:
+      summary: Obtener las descripciones de los manga.
+      operationId: nbDescripcionesManga
+      responses:
+        "200":
+          description: Devuelve las descripciones de las Mangas para pintar en el mapa de palabras
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MangaPorPaises'
+      x-swagger-router-controller: Default
+  /nbDescripcionesEmulador:
+    get:
+      summary: Obtener las descripciones de los emulador.
+      operationId: nbDescripcionesEmulador
+      responses:
+        "200":
+          description: Devuelve las descripciones de las Emulador para pintar en el mapa de palabras
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmuladorPorPaises'
+      x-swagger-router-controller: Default
+  /nbDescripcionesJuego:
+    get:
+      summary: Obtener las descripciones de los juego.
+      operationId: nbDescripcionesJuego
+      responses:
+        "200":
+          description: Devuelve las descripciones de las Juegos para pintar en el mapa de palabras
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JuegoPorPaises'
+      x-swagger-router-controller: Default
+
+
+
+
+
+  /nbDuracionAnioAnime:
+    get:
+      summary: Obtener la duracion y el anio de cada anime
+      operationId: nbDuracionAnioAnime
+      responses:
+        "200":
+          description: Devuelve el anio y la duracion de cada anime
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PelisPorPaises'
+      x-swagger-router-controller: Default
+components:
+  schemas:
+    ListaComics:
+      type: object
+      properties:
+        comics:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comic'
+      example:
+        comics:
+        - titulo: titulo
+          id: id
+          autor: autor
+        - titulo: titulo
+          id: id
+          autor: autor
+    Comic:
+      type: object
+      properties:
+        id:
+          type: string
+        titulo:
+          type: string
+        autor:
+          type: string
+      example:
+        titulo: titulo
+        id: id
+        autor: autor
+    Libro:
+      type: object
+      properties:
+        id:
+          type: string
+        titulo:
+          type: string
+        autor:
+          type: string
+      example:
+        titulo: titulo
+        id: id
+        autor: autor
+    ListaMangas:
+      type: object
+      properties:
+        mangas:
+          type: array
+          items:
+            $ref: '#/components/schemas/Manga'
+      example:
+        mangas:
+        - titulo: titulo
+          id: id
+          autor: autor
+        - titulo: titulo
+          id: id
+          autor: autor
+    Manga:
+      type: object
+      properties:
+        id:
+          type: string
+        titulo:
+          type: string
+        autor:
+          type: string
+      example:
+        titulo: titulo
+        id: id
+        autor: autor
+    ListaSeries:
+      type: object
+      properties:
+        series:
+          type: array
+          items:
+            $ref: '#/components/schemas/Serie'
+      example:
+        series:
+        - director: director
+          titulo: titulo
+          id: id
+        - director: director
+          titulo: titulo
+          id: id
+    Serie:
+      type: object
+      properties:
+        id:
+          type: string
+        titulo:
+          type: string
+        director:
+          type: string
+      example:
+        director: director
+        titulo: titulo
+        id: id
+    ListaPelis:
+      type: object
+      properties:
+        pelis:
+          type: array
+          items:
+            $ref: '#/components/schemas/Peli'
+      example:
+        pelis:
+        - director: director
+          titulo: titulo
+          id: id
+        - director: director
+          titulo: titulo
+          id: id
+    ListaPelis2:
+      type: object
+      properties:
+        pelis:
+          type: array
+          items:
+            $ref: '#/components/schemas/Peli'
+      example:
+        pelis:
+        - director: director
+          titulo: titulo
+          id: id
+        - director: director
+          titulo: titulo
+          id: id
+    ListaLibros:
+      type: object
+      properties:
+        pelis:
+          type: array
+          items:
+            $ref: '#/components/schemas/Libro'
+      example:
+        libros:
+        - autor: autor
+          titulo: titulo
+          id: id
+        - autor: autor
+          titulo: titulo
+          id: id
+    ListaJuegos:
+      type: object
+      properties:
+        juegos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Juego'
+      example:
+        juegos:
+        - titulo: titulo
+          id: id
+    ListaEmulador:
+      type: object
+      properties:
+        juegos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Emulador'
+      example:
+        emuladores:
+        - titulo: titulo
+          id: id
+    PelisPorPaises:
+      type: object
+      properties:
+        pais:
+          type: string
+          items:
+            $ref: '#/components/schemas/Peli'
+      example:
+        pais:
+        - Estados Unidos: 22
+    AnimesPorAnio:
+      type: object
+      properties:
+        pais:
+          type: string
+          items:
+            $ref: '#/components/schemas/Peli'
+      example:
+        pais:
+        - Estados Unidos: 22
+    ComicsPorAutor:
+      type: object
+      properties:
+        autor:
+          type: number
+          items:
+            $ref: '#/components/schemas/Comic'
+      example:
+        pais:
+        - Pedro: 22
+    descripcionComic:
+      type: object
+      properties:
+        autor:
+          type: number
+          items:
+            $ref: '#/components/schemas/Comic'
+      example:
+        pais:
+        - Pedro: 22
+    Juego:
+      type: object
+      properties:
+        id:
+          type: string
+        titulo:
+          type: string
+        plataformas:
+          type: string
+        generos:
+          type: string
+      example:
+        id: Id...
+        titulo: Titulo...
+        plataformas: Plataformas...
+        generos: Generos...
+    Emulador:
+      type: object
+      properties:
+        id:
+          type: string
+        titulo:
+          type: string
+        plataformas:
+          type: string
+        generos:
+          type: string
+      example:
+        id: Id...
+        titulo: Titulo...
+        plataformas: Plataformas...
+        generos: Generos...
+    Peli:
+      type: object
+      properties:
+        id:
+          type: string
+        titulo:
+          type: string
+        director:
+          type: string
+      example:
+        director: director
+        titulo: titulo
+        id: id
+  parameters:
+    PaginationParameters:
+      name: page
+      in: query
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: integer
+        default: 1
+    LimitParameters:
+      name: limit
+      in: query
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: integer
+        default: 10
+    IdParameter:
+      name: id
+      in: query
+      required: false
+      style: form
+      explode: true
+      schema:
+        type: string
