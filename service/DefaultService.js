@@ -331,6 +331,23 @@ exports.nbGenerosAnime = function() {
 exports.nbDescripcionesLibro = function() {
   return new Promise(function(resolve, reject) {
     var examples = {};
+   
+    db("SELECT descripcion FROM manga", (results) => {
+      examples['application/json'] = {
+        "descripcion" : results,
+      };
+          if (Object.keys(examples).length > 0) {
+            resolve(examples[Object.keys(examples)[0]]);
+          } else {
+            resolve();
+          }
+    });
+  });
+}
+
+exports.nbDescripcionesManga = function() {
+  return new Promise(function(resolve, reject) {
+    var examples = {};
     // NOTA: Hacemos la query a la columna de autor porque hay una confusion en el webscrapping
     db("SELECT autor FROM libro", (results) => {
       examples['application/json'] = {
@@ -344,6 +361,34 @@ exports.nbDescripcionesLibro = function() {
     });
   });
 }
+
+
+
+exports.nbDescripcionesJuego = function() {
+  return new Promise(function(resolve, reject) {
+    var examples = {};
+    // NOTA: Hacemos la query a la columna de autor porque hay una confusion en el webscrapping
+    db("SELECT descripcion FROM juegos", (results) => {
+      examples['application/json'] = {
+        "descripcion" : results,
+      };
+          if (Object.keys(examples).length > 0) {
+            resolve(examples[Object.keys(examples)[0]]);
+          } else {
+            resolve();
+          }
+    });
+  });
+}
+
+
+
+
+
+
+
+
+
 
 exports.puntosTotalesPorAutorManga = function() {
   return new Promise(function(resolve, reject) {
@@ -360,6 +405,25 @@ exports.puntosTotalesPorAutorManga = function() {
     });
   });
 }
+
+
+
+exports.nbDescripcionesSerie = function() {
+  return new Promise(function(resolve, reject) {
+    var examples = {};
+    db("SELECT descripcion FROM serie", (results) => {
+      examples['application/json'] = {
+        "descripciones" : results,
+      };
+          if (Object.keys(examples).length > 0) {
+            resolve(examples[Object.keys(examples)[0]]);
+          } else {
+            resolve();
+          }
+    });
+  });
+}
+
 
 
 exports.nbDescripcionesComic = function() {
@@ -379,6 +443,24 @@ exports.nbDescripcionesComic = function() {
 }
 
 
+exports.nbDescripcionesEmulador = function() {
+  return new Promise(function(resolve, reject) {
+    var examples = {};
+    db("SELECT descripcion FROM emulador", (results) => {
+      examples['application/json'] = {
+        "descripciones" : results,
+      };
+          if (Object.keys(examples).length > 0) {
+            resolve(examples[Object.keys(examples)[0]]);
+          } else {
+            resolve();
+          }
+    });
+  });
+}
+
+
+
 exports.nbAnimesPorPaises = function() {
   return new Promise(function(resolve, reject) {
     var examples = {};
@@ -394,6 +476,9 @@ exports.nbAnimesPorPaises = function() {
     });
   });
 }
+
+
+
 
 exports.nbComicsPorAutor = function() {
   return new Promise(function(resolve, reject) {

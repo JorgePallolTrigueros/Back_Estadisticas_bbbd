@@ -421,6 +421,126 @@ module.exports.nbDescripcionesLibro = function nbDescripcionesLibro (req, res, n
     });
 };
 
+
+
+
+module.exports.nbDescripcionesManga = function nbDescripcionesManga (req, res, next) {
+
+  function separateWordsAndCounts(words) {
+      const wordCount = {};
+      const uniqueWords = [];
+      const repeatedWordsCount = [];
+
+      // Contar la frecuencia de cada palabra
+      words.forEach(word => {
+          wordCount[word] = (wordCount[word] || 0) + 1;
+      });
+
+      // Separar en palabras únicas y frecuencias de palabras repetidas
+      for (const [word, count] of Object.entries(wordCount)) {
+          if (count === 1) {
+              uniqueWords.push(word);
+          } else {
+              repeatedWordsCount.push({ word, count });
+          }
+      }
+
+      return { uniqueWords, repeatedWordsCount };
+  }
+
+  Default.nbDescripcionesManga()
+    .then(function (response) {
+      const gens = response.sinopsis;
+      let words = [];
+      for (let gen of gens) {
+        let r = gen.autor;
+        if (!r) continue;
+        r = r.replace('/<br>/g', '');
+        r = r.replace('/<b>/g', '');
+        r = r.replace('/</b>/g', '');
+        r = r.replace('/<i>/g', '');
+        r = r.replace('/</i>/g', '');
+        r = r.replace('/<p>/g', '');
+        r = r.replace('/</p>/g', '');
+        r = r.replace('/<div>/g', '');
+        r = r.replace('/</div>/g', '');
+        r = r.replace('/|/g', '.');
+        const rParts = r.split(' ');
+        for (let part of rParts) {
+          const partTrimmed = part.trim();
+          words.push(partTrimmed);
+          
+        }
+      }
+      const result = separateWordsAndCounts(words);
+      utils.writeJson(res, result);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
+
+
+module.exports.nbDescripcionesJuego = function nbDescripcionesJuego (req, res, next) {
+
+  function separateWordsAndCounts(words) {
+      const wordCount = {};
+      const uniqueWords = [];
+      const repeatedWordsCount = [];
+
+      // Contar la frecuencia de cada palabra
+      words.forEach(word => {
+          wordCount[word] = (wordCount[word] || 0) + 1;
+      });
+
+      // Separar en palabras únicas y frecuencias de palabras repetidas
+      for (const [word, count] of Object.entries(wordCount)) {
+          if (count === 1) {
+              uniqueWords.push(word);
+          } else {
+              repeatedWordsCount.push({ word, count });
+          }
+      }
+
+      return { uniqueWords, repeatedWordsCount };
+  }
+
+  Default.nbDescripcionesJuego()
+    .then(function (response) {
+      const gens = response.descripcion;
+      let words = [];
+      for (let gen of gens) {
+        let r = gen.descripcion;
+        if (!r) continue;
+        r = r.replace('/<br>/g', '');
+        r = r.replace('/<b>/g', '');
+        r = r.replace('/</b>/g', '');
+        r = r.replace('/<i>/g', '');
+        r = r.replace('/</i>/g', '');
+        r = r.replace('/<p>/g', '');
+        r = r.replace('/</p>/g', '');
+        r = r.replace('/<div>/g', '');
+        r = r.replace('/</div>/g', '');
+        r = r.replace('/|/g', '.');
+        const rParts = r.split(' ');
+        for (let part of rParts) {
+          const partTrimmed = part.trim();
+          words.push(partTrimmed);
+          
+        }
+      }
+      const result = separateWordsAndCounts(words);
+      utils.writeJson(res, result);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
+
+
+
 module.exports.nbPelisPorPaises = function nbPelisPorPaises (req, res, next) {
   Default.nbPelisPorPaises()
     .then(function (response) {
@@ -483,6 +603,10 @@ module.exports.nbPelisPorPaisesPorAnio = function nbPelisPorPaisesPorAnio (req, 
       });
   };
 
+
+
+
+
 // Mapa de palabras para la pagina de Estadisticas Comics
 module.exports.nbDescripcionesComic = function nbDescripcionesComic (req, res, next) {
 
@@ -536,3 +660,196 @@ module.exports.nbDescripcionesComic = function nbDescripcionesComic (req, res, n
       utils.writeJson(res, response);
     });
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Mapa de palabras para la pagina de Estadisticas Comics
+module.exports.nbDescripcionesComic = function nbDescripcionesComic (req, res, next) {
+
+  function separateWordsAndCounts(words) {
+      const wordCount = {};
+      const uniqueWords = [];
+      const repeatedWordsCount = [];
+
+      // Contar la frecuencia de cada palabra
+      words.forEach(word => {
+          wordCount[word] = (wordCount[word] || 0) + 1;
+      });
+
+      // Separar en palabras únicas y frecuencias de palabras repetidas
+      for (const [word, count] of Object.entries(wordCount)) {
+          if (count === 1) {
+              uniqueWords.push(word);
+          } else {
+              repeatedWordsCount.push({ word, count });
+          }
+      }
+
+      return { uniqueWords, repeatedWordsCount };
+  }
+
+  Default.nbDescripcionesComic()
+    .then(function (response) {
+      const descs = response.descripciones;
+      let words = [];
+      for (let desc of descs) {
+        let r = desc.descripcion;
+        if (!r) continue;
+        r = r.replace('<p>', '');
+        r = r.replace('</p>', '');
+        r = r.replace('<strong>', '');
+        r = r.replace('</strong>', '');
+        r = r.replace('&nbsp;', '');
+        r = r.replace('|', '.');
+        const rParts = r.split(' ');
+        for (let part of rParts) {
+          const partTrimmed = part.trim();
+          // Cojo palabras que se repitan mas de 3 veces
+          if (partTrimmed.length > 3) words.push(partTrimmed);
+          
+        }
+      }
+      const result = separateWordsAndCounts(words);
+      utils.writeJson(res, result);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
+
+
+
+
+// Mapa de palabras para la pagina de Descriociones de emulador
+module.exports.nbDescripcionesEmulador = function nbDescripcionesEmulador (req, res, next) {
+
+  function separateWordsAndCounts(words) {
+      const wordCount = {};
+      const uniqueWords = [];
+      const repeatedWordsCount = [];
+
+      // Contar la frecuencia de cada palabra
+      words.forEach(word => {
+          wordCount[word] = (wordCount[word] || 0) + 1;
+      });
+
+      // Separar en palabras únicas y frecuencias de palabras repetidas
+      for (const [word, count] of Object.entries(wordCount)) {
+          if (count === 1) {
+              uniqueWords.push(word);
+          } else {
+              repeatedWordsCount.push({ word, count });
+          }
+      }
+
+      return { uniqueWords, repeatedWordsCount };
+  }
+
+  Default.nbDescripcionesEmulador()
+    .then(function (response) {
+      const descs = response.descripciones;
+      let words = [];
+      for (let desc of descs) {
+        let r = desc.descripcion;
+        if (!r) continue;
+        r = r.replace('<p>', '');
+        r = r.replace('</p>', '');
+        r = r.replace('<strong>', '');
+        r = r.replace('</strong>', '');
+        r = r.replace('&nbsp;', '');
+        r = r.replace('|', '.');
+        const rParts = r.split(' ');
+        for (let part of rParts) {
+          const partTrimmed = part.trim();
+          // Cojo palabras que se repitan mas de 3 veces
+          if (partTrimmed.length > 3) words.push(partTrimmed);
+          
+        }
+      }
+      const result = separateWordsAndCounts(words);
+      utils.writeJson(res, result);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
+
+
+
+
+
+// Mapa de palabras para la pagina de Estadisticas Comics
+module.exports.nbDescripcionesSerie = function nbDescripcionesSerie (req, res, next) {
+
+  function separateWordsAndCounts(words) {
+      const wordCount = {};
+      const uniqueWords = [];
+      const repeatedWordsCount = [];
+
+      // Contar la frecuencia de cada palabra
+      words.forEach(word => {
+          wordCount[word] = (wordCount[word] || 0) + 1;
+      });
+
+      // Separar en palabras únicas y frecuencias de palabras repetidas
+      for (const [word, count] of Object.entries(wordCount)) {
+          if (count === 1) {
+              uniqueWords.push(word);
+          } else {
+              repeatedWordsCount.push({ word, count });
+          }
+      }
+
+      return { uniqueWords, repeatedWordsCount };
+  }
+
+  Default.nbDescripcionesSerie()
+    .then(function (response) {
+      const descs = response.descripciones;
+      let words = [];
+      for (let desc of descs) {
+        let r = desc.descripcion;
+        if (!r) continue;
+        r = r.replace('<p>', '');
+        r = r.replace('</p>', '');
+        r = r.replace('<strong>', '');
+        r = r.replace('</strong>', '');
+        r = r.replace('&nbsp;', '');
+        r = r.replace('|', '.');
+        const rParts = r.split(' ');
+        for (let part of rParts) {
+          const partTrimmed = part.trim();
+          // Cojo palabras que se repitan mas de 3 veces
+          if (partTrimmed.length > 3) words.push(partTrimmed);
+          
+        }
+      }
+      const result = separateWordsAndCounts(words);
+      utils.writeJson(res, result);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response);
+    });
+};
+
