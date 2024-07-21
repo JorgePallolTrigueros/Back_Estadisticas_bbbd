@@ -391,7 +391,7 @@ module.exports.nbDescripcionesLibro = function nbDescripcionesLibro (req, res, n
 
   Default.nbDescripcionesLibro()
     .then(function (response) {
-      const gens = response.sinopsis;
+      const gens = response.descripcion;
       let words = [];
       for (let gen of gens) {
         let r = gen.autor;
@@ -603,6 +603,47 @@ module.exports.nbPelisPorPaisesPorAnio = function nbPelisPorPaisesPorAnio (req, 
       });
   };
 
+
+// Numero de comic po autores 
+  // Desepararlos por Comas
+  module.exports.nbLibrosPorAutor = function nbLibrosPorAutor (req, res, next) {
+    Default.nbLibrosPorAutor()
+      .then(function (response) {
+        let result = {};
+  
+        const resData = response.nbLibros;
+      
+        for (const row of resData) {
+          if (!row.sinopsis) continue;
+          result[row.sinopsis] = row.numLibros;
+        }
+
+        utils.writeJson(res, result);
+      })
+      .catch(function (response) {
+        utils.writeJson(res, response);
+      });
+  };
+
+
+  module.exports.nbJuegosPorGenero = function nbJuegosPorGenero (req, res, next) {
+    Default.nbJuegosPorGenero()
+      .then(function (response) {
+        let result = {};
+  
+        const resData = response.nbJuegos;
+      
+        for (const row of resData) {
+          if (!row.generos) continue;
+          result[row.generos] = row.numJuegos;
+        }
+
+        utils.writeJson(res, result);
+      })
+      .catch(function (response) {
+        utils.writeJson(res, response);
+      });
+  };
 
 
 

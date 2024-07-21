@@ -332,7 +332,7 @@ exports.nbDescripcionesLibro = function() {
   return new Promise(function(resolve, reject) {
     var examples = {};
    
-    db("SELECT descripcion FROM manga", (results) => {
+    db("SELECT autor FROM libro", (results) => {
       examples['application/json'] = {
         "descripcion" : results,
       };
@@ -467,6 +467,40 @@ exports.nbAnimesPorPaises = function() {
     db("SELECT paises as pais,COUNT(*) as total FROM anime GROUP BY paises", (results) => {
       examples['application/json'] = {
         "nbAnimes" : results,
+      };
+          if (Object.keys(examples).length > 0) {
+            resolve(examples[Object.keys(examples)[0]]);
+          } else {
+            resolve();
+          }
+    });
+  });
+}
+
+
+exports.nbLibrosPorAutor = function() {
+  return new Promise(function(resolve, reject) {
+    var examples = {};
+    db("SELECT sinopsis,COUNT(*) as numLibros FROM libro GROUP BY sinopsis ORDER BY numLibros DESC LIMIT 15", (results) => {
+      examples['application/json'] = {
+        "nbLibros" : results,
+      };
+          if (Object.keys(examples).length > 0) {
+            resolve(examples[Object.keys(examples)[0]]);
+          } else {
+            resolve();
+          }
+    });
+  });
+}
+
+
+exports.nbJuegosPorGenero = function() {
+  return new Promise(function(resolve, reject) {
+    var examples = {};
+    db("SELECT generos,COUNT(*) as numJuegos FROM juegos GROUP BY generos ORDER BY numJuegos DESC LIMIT 15", (results) => {
+      examples['application/json'] = {
+        "nbJuegos" : results,
       };
           if (Object.keys(examples).length > 0) {
             resolve(examples[Object.keys(examples)[0]]);

@@ -941,6 +941,34 @@ paths:
               schema:
                 $ref: '#/components/schemas/PelisPorPaises'
       x-swagger-router-controller: Default
+  /nbLibrosPorAutor:
+    get:
+      summary: Obtener el numero de libros por autor
+      operationId: nbLibrosPorAutor
+      responses:
+        "200":
+          description: Lista de autores con el numero de libros de cada uno
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComicsPorAutor'
+      x-swagger-router-controller: Default     
+  /nbJuegosPorGenero:
+    get:
+      summary: Obtener el numero de juegos por Genero
+      operationId: nbJuegosPorGenero
+      responses:
+        "200":
+          description: Lista de generos con el numero de juegos de cada uno
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComicsPorAutor'
+      x-swagger-router-controller: Default   
+
+
+
+
 components:
   schemas:
     ListaComics:
